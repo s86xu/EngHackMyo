@@ -8,12 +8,12 @@ myo.controlMouse(true)
 function onForegroundWindowChange(app, title)
     myo.debug("onForegroundWindowChange: " .. app .. ", " .. title)
 	appTitle = title
-	if string.sub(appTitle, -string.len(targetApp))==targetApp then
-		myo.debug("Active App")
-		locked = false
-	else
-		locked = true
-	end
+	--if string.sub(appTitle, -string.len(targetApp))==targetApp then
+	--	myo.debug("Active App")
+	--	locked = false
+	--else
+	--	locked = true
+	--end
 	
     return true
 end
@@ -76,12 +76,12 @@ end
 function onFist()
 	myo.debug("Click")	
 	myo.vibrate("short")
-	myo.mouse("left", "down")
+	myo.mouse("left", "click")
 end
 
 function onFistOff()
 	myo.debug("Release")
-	myo.mouse("left", "up")
+	--myo.mouse("left", "up")
 end
  
 function onFingersSpread()
