@@ -1,17 +1,21 @@
 scriptId = 'com.thalmic.examples.myfirstscript'
  
-locked = true
+locked = false
 appTitle = ""
-YOUTUBE = " - YouTube - Google Chrome"
+targetApp = "Paint"
+myo.controlMouse(true)
  
 function onForegroundWindowChange(app, title)
     myo.debug("onForegroundWindowChange: " .. app .. ", " .. title)
 	appTitle = title
-	if string.sub(appTitle, -string.len(YOUTUBE))==YOUTUBE then
-		myo.debug("Youtube!!")
-		return true
+	if string.sub(appTitle, -string.len(targetApp))==targetApp then
+		myo.debug("Active App")
+		locked = false
+	else
+		locked = true
 	end
-    return false
+	
+    return true
 end
  
 function activeAppName()
@@ -25,23 +29,33 @@ function onPoseEdge(pose, edge)
 	
 	if (edge == "on") then
 		if (pose == "thumbToPinky") then
-			toggleLock()
+			--toggleLock()
 		elseif (not locked) then
 			if (pose == "fist") then
 				onFist()
+			elseif (pose == "fingersSpread") then
+				onFingersSpread()
 			end
+		end
+	end
+
+	if (not locked and edge == "off") then
+		if (pose == "fist") then
+			onFistOff()
 		end
 	end
 end
  
 function toggleLock()
-	locked = not locked
+	--locked = not locked
 	myo.vibrate("short")
 	if (not locked) then
 		-- Vibrate twice on unlock
 		myo.debug("Unlocked")
+		myo.controlMouse(true)
 		myo.vibrate("short")
 	else 
+		myo.controlMouse(false)
 		myo.debug("Locked")
 	end
 end
@@ -59,17 +73,21 @@ function onWaveIn()
 	myo.keyboard("tab","press","shift")
 end
  
- 
 function onFist()
-	myo.debug("Space")	
-	--myo.vibrate("medium")
-	myo.keyboard("space","press")
+	myo.debug("Click")	
+	myo.vibrate("short")
+	myo.mouse("left", "down")
+end
+
+function onFistOff()
+	myo.debug("Release")
+	myo.mouse("left", "up")
 end
  
 function onFingersSpread()
-	myo.debug("Escape")
+	myo.debug("Centered")
 	--myo.vibrate("long")
-	myo.keyboard("escape", "press")
+	myo.centerMousePosition()
 end
  
 function conditionallySwapWave(pose)
