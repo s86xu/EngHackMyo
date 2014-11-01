@@ -2,17 +2,22 @@ scriptId = 'com.thalmic.examples.myfirstscript'
  
 locked = true
 appTitle = ""
+YOUTUBE = " - YouTube - Google Chrome"
  
 function onForegroundWindowChange(app, title)
     myo.debug("onForegroundWindowChange: " .. app .. ", " .. title)
 	appTitle = title
-    return true
+	if string.sub(appTitle, -string.len(YOUTUBE))==YOUTUBE then
+		myo.debug("Youtube!!")
+		return true
+	end
+    return false
 end
  
 function activeAppName()
 	return appTitle
 end
- 
+
 function onPoseEdge(pose, edge)
 	myo.debug("onPoseEdge: " .. pose .. ": " .. edge)
 	
@@ -22,14 +27,8 @@ function onPoseEdge(pose, edge)
 		if (pose == "thumbToPinky") then
 			toggleLock()
 		elseif (not locked) then
-			if (pose == "waveOut") then
-				onWaveOut()		
-			elseif (pose == "waveIn") then
-				onWaveIn()
-			elseif (pose == "fist") then
+			if (pose == "fist") then
 				onFist()
-			elseif (pose == "fingersSpread") then
-				onFingersSpread()			
 			end
 		end
 	end
@@ -62,9 +61,9 @@ end
  
  
 function onFist()
-	myo.debug("Enter")	
+	myo.debug("Space")	
 	--myo.vibrate("medium")
-	myo.keyboard("return","press")
+	myo.keyboard("space","press")
 end
  
 function onFingersSpread()
