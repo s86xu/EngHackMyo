@@ -4,9 +4,6 @@ from myro import *
 
 init(raw_input("What is the COM port? "))
 
-# rotation and verdical
-    
-
 def isPositive(n):
     if n < 0:
         return False
@@ -16,6 +13,7 @@ def isPositive(n):
 while True:
     inp = raw_input()
     turn, speed = map(float, inp.split())
+    print turn, speed 
     
     if not -1 < turn < 1:
         turn = turn/abs(turn)
@@ -37,5 +35,4 @@ while True:
         else:
             speedLeft = speed + abs(turn)
     
-    motors(speedLeft, 0)
-    motors(speedRight, 1)
+    motors(speedLeft, speedRight)
