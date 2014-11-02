@@ -1,4 +1,4 @@
-scriptId = 'com.thalmic.examples.myfirstscript'
+scriptId = 'com.enghack.scribbler'
 
 unlocked = false
 appTitle = ""
