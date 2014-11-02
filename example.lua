@@ -75,7 +75,7 @@ end
  
 function onFist()
 	myo.debug("Click")	
-	myo.vibrate("short")
+	--myo.vibrate("short")
 	myo.mouse("left", "click")
 end
 
