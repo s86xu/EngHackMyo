@@ -12,6 +12,8 @@ def isPositive(n):
 
 while True:
     inp = raw_input()
+    if inp == "0 0":
+        beep(2, 800)
     turn, speed = map(float, inp.split())
     print turn, speed 
     
@@ -35,4 +37,6 @@ while True:
         else:
             speedLeft = speed + abs(turn)
     
+    if abs(turn) < 0.3 and abs(speed) < 0.15:
+        speedLeft, speedRight = 0, 0
     motors(speedLeft, speedRight)

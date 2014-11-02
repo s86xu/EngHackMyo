@@ -2,7 +2,7 @@ scriptId = 'com.thalmic.examples.myfirstscript'
 
 unlocked = false
 appTitle = ""
-target = "EngHackMyo"
+target = "src_Scribbler"
 myo.debug(myo.getArm())
 
 rollCal = 0
@@ -142,11 +142,7 @@ function onPeriodic()
 		if (roll > 0) then
 			roll = roll*1.5
 		end
-
-		if (myo.getXDirection() == "towardElbow") then
-			pitch = -pitch
-			roll = -roll
-		end
+			
 		
 		if (unlocked) then
 			message = tostring(round(roll, 3)).." "..tostring(round(pitch, 3))
