@@ -1,6 +1,3 @@
-EngHackMyo
-==========
-
 	if (pose == "fist") and (edge == "on") then
 		myo.keyboard("f", "press")
 		myo.keyboard("return", "press")
@@ -15,3 +12,4 @@ EngHackMyo
 	if (pose == "waveOut") and (edge == "on") then
 		myo.keyboard("b", "press")
 		myo.keyboard("return", "press")
+
