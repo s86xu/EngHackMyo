@@ -4,25 +4,38 @@ from myro import *
 
 init(raw_input("What is the COM port? "))
 
+# rotation and verdical
+    
+
+def isPositive(n):
+    if n < 0:
+        return False
+    else:
+        return True
+
 while True:
-    key = raw_input()
-    if key == "f":
-        forward()
-    elif key == "r":
-        backward()
-    elif key == "t":
-        spd = input()
-        turn(spd)
-    elif key == "s":
-        stop()
+    inp = raw_input()
+    turn, speed = map(float, inp.split())
+    
+    if not -1 < turn < 1:
+        turn = turn/abs(turn)
 
+    if not -1 < speed < 1:
+        speed = speed/abs(speed)
 
-def forward():
-    move(1,0)
-
-def backward():
-    move(-1,0)
-
-def turn(speed):
-    rotate(speed)
-
+    speedLeft = speed
+    speedRight = speed
+    
+    if isPositive(speed):
+        if isPositive(turn):
+            speedRight = speed - turn
+        else:
+            speedLeft = speed - abs(turn)
+    else:
+        if isPositive(turn):
+            speedRight = speed + turn
+        else:
+            speedLeft = speed + abs(turn)
+    
+    motors(speedLeft, 0)
+    motors(speedRight, 1)
