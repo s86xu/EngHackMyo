@@ -1,6 +1,6 @@
 scriptId = 'com.thalmic.examples.myfirstscript'
 
-unlocked = true
+unlocked = false
 appTitle = ""
 target = "- Sublime Text"
 myo.debug(myo.getArm())
@@ -12,6 +12,8 @@ MINROLL = -1.5
 MAXROLL = 1.5
 
 MAXPITCH = math.pi/2
+
+timeSinceFlex = 0
  
 function onForegroundWindowChange(app, title)
     myo.debug("onForegroundWindowChange: " .. app .. ", " .. title)
@@ -35,7 +37,7 @@ function onPoseEdge(pose, edge)
 	
 	if (edge == "on") then
 		if (pose == "thumbToPinky") then
-			--toggleLock()
+			onFlex()
 		elseif (unlocked) then
 			if (pose == "fist") then
 				onFist()
@@ -47,6 +49,16 @@ function onPoseEdge(pose, edge)
 		end
 	end
 end
+
+function onFlex()
+	time = myo.getTimeMilliseconds()
+
+	if time - timeSinceFlex < 500 then
+		toggleLock()
+	else
+		timeSinceFlex = time
+	end
+end
  
 function toggleLock()
 	unlocked = not unlocked
@@ -54,6 +66,7 @@ function toggleLock()
 	if (unlocked) then
 		-- Vibrate twice on unlock
 		myo.debug("Unlocked")
+		calibrateGyro()
 		myo.vibrate("short")
 	else 
 		myo.debug("Locked")
@@ -65,16 +78,10 @@ function onWaveOut()
 	--myo.vibrate("short")
 	myo.keyboard("tab", "press")
 end
- 
-function onWaveIn()
-	myo.debug("Previous")
-	--myo.vibrate("short")
-	--myo.vibrate("short")
-	myo.keyboard("tab","press","shift")
-end
+
  
 function onFist()
-	calibrateGyro()
+	--calibrateGyro()
 	--[[myo.debug("Click")	
 	--myo.vibrate("short")
 	message = "hello world"
@@ -100,6 +107,7 @@ function onRest()
 end
  
 function onFingersSpread()
+	calibrateGyro()
 	--myo.debug("Centered")
 	--myo.vibrate("long")
 	--myo.centerMousePosition()
@@ -119,7 +127,7 @@ end
 function onPeriodic()
 
 	pitch = myo.getPitch() - pitchCal
-	roll = myo.getRoll() - rollCal
+	roll =  myo.getRoll() - rollCal
 
 	if (myo.getXDirection() == "towardElbow") then
 		pitch = -pitch
